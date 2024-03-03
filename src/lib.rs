@@ -23,28 +23,33 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 pub struct Config {
     pub query: String,
     pub file_path: String,
+    pub flag: String,
     pub ignore_case: bool,
     pub hard_case: bool,
 }
 
 impl Config {
-    pub fn build(mut args: impl Iterator<Item = String>) -> Result<Config, &'static str> {
-        args.next();
+    pub fn build(args: impl Iterator<Item = String>) -> Result<Config, &'static str> {
+        let args: Vec<String> = args.collect();
 
-        let query = match args.next() {
-            Some(arg) => arg,
-            None => return Err("Didn't get a query string"),
-        };
+        let query;
+        let file_path;
+        let flag;
 
-        let file_path = match args.next() {
-            Some(arg) => arg,
-            None => return Err("Didn't get a file path"),
-        };
+        if args.len() > 3 {
+            flag = args[1].clone();
+            query = args[2].clone();
+            file_path = args[3].clone();
+        } else {
+            flag = "".to_string();
+            query = args[1].clone();
+            file_path = args[2].clone();
+        }
 
-        let ignore_case = env::var("IGNORE_CASE").is_ok();
-        let hard_case = env::var("HARD_CASE").is_ok();
+        let ignore_case = env::var("IGNORE_CASE").is_ok() || flag.eq("-i");
+        let hard_case = env::var("HARD_CASE").is_ok() || flag.eq("-h");
 
-        Ok(Config {query, file_path, ignore_case, hard_case})
+        Ok(Config {query, file_path, flag, ignore_case, hard_case})
     }
 }
 
