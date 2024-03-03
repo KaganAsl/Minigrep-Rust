@@ -14,3 +14,11 @@ Minigrep with rust from [rustbook](https://doc.rust-lang.org/stable/book/ch12-00
 - HARD_CASE: If set to true, the search will be case sensitive and searches for the exact word
   <code>HARD_CASE=1 cargo run -- 'word to search' 'path to file'</code>
   </br> In powershell: <code>$env:HARD_CASE=1; cargo run -- 'word to search' 'path to file'</code>. Thiw will make persistent the environment variable for the current session. It can be removed with <code>Remove-Item Env:HARD_CASE</code>
+
+#### Flags
+
+- -i: If set, the search will be case insensitive
+  <code>cargo run -- -i 'word to search' 'path to file'</code>
+
+- -h: If set, the search will be case sensitive and searches for the exact word
+  <code>cargo run -- -h 'word to search' 'path to file'</code>
