@@ -36,7 +36,11 @@ impl Config {
         let file_path;
         let flag;
 
-        if args.len() > 3 {
+        if args.len() > 4 {
+            return Err("Too much arguments");
+        } else if args.len() < 3 {
+            return Err("Not enough arguments");
+        } else if args.len() > 3 {
             flag = args[1].clone();
             query = args[2].clone();
             file_path = args[3].clone();
